@@ -180,6 +180,7 @@ export interface GqlErrorMiddlewareOpts {
 export function errorMiddleware(opts?: GqlErrorMiddlewareOpts): Middleware;
 
 export type RetryAfterFn = (attempt: number) => number | false;
+export type TimeoutAfterFn = (attempt: number) => number;
 export type ForceRetryFn = (runNow: Function, delay: number) => any;
 export type AbortFn = (msg?: string) => any;
 
@@ -199,7 +200,7 @@ export type StatusCheckFn = (
 ) => boolean;
 
 export interface RetryMiddlewareOpts {
-  fetchTimeout?: number;
+  fetchTimeout?: number | TimeoutAfterFn;
   retryDelays?: number[] | RetryAfterFn;
   statusCodes?: number[] | false | StatusCheckFn;
   logger?: Function | false;
